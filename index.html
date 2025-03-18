@@ -53,6 +53,24 @@
       z-index: 1;
     }
 
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255,107,53,0.6);
+      }
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 15px rgba(255,107,53,0);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255,107,53,0);
+      }
+    }
+    .cta-highlight {
+      animation: pulse 2s infinite;
+    }
+
     nav {
       background: white;
       padding: 1.5rem;
@@ -134,6 +152,7 @@
       display: inline-block;
       transition: transform 0.3s ease;
       margin: 1rem 0;
+      text-align: center;
     }
 
     .cta-button:hover {
@@ -193,7 +212,6 @@
 </head>
 <body>
   <header>
-    <!-- <img src="logo.png" alt="Nivora Logo" style="max-width:150px;"> -->
     <h1>Nivora – Your Partner in Transformation</h1>
     <p>Transform your enterprise with cutting-edge solutions and expert IT consultancy.</p>
     <a href="#contact" class="cta-button">Start Your Transformation Today</a>
@@ -239,7 +257,11 @@
     <div class="card">
       <h3>Authord</h3>
       <p>An innovative VS Code plugin serving as a powerful alternative to JetBrains Writerside, designed to enhance productivity and foster seamless collaboration within your enterprise.</p>
-      <a href="https://authord.org/" class="cta-button" target="_blank" rel="noopener">Explore Authord</a>
+      <a href="https://authord.org/" class="cta-button cta-highlight" target="_blank" rel="noopener">Explore Authord</a>
+      <p style="margin-top: 0.5rem;">
+        Discover how Authord can revolutionize your team's content workflow. 
+        Boost efficiency, streamline collaboration, and accelerate results.
+      </p>
     </div>
   </section>
 
