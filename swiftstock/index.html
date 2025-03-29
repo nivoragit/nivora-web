@@ -30,6 +30,8 @@
             text-align: center;
             max-width: 400px;
             padding: 2rem;
+            margin: auto;
+            transition: opacity 0.5s ease-in-out;
         }
 
         .logo {
@@ -75,17 +77,15 @@
             border: none;
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
 
         @keyframes progress-pulse {
             0% { opacity: 1; }
             50% { opacity: 0.5; }
             100% { opacity: 1; }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -105,7 +105,6 @@
             </div>
         </div>
 
-        <!-- Update iframe src -->
         <iframe id="contentFrame" src="https://swisstock.netlify.app/" loading="eager"></iframe>
     </div>
 
@@ -136,16 +135,23 @@
             }
         }, 2500);
 
+        // Hide loading container and show iframe after load
         iframe.addEventListener('load', () => {
             clearInterval(progressInterval);
             clearInterval(messageInterval);
             progressBar.style.width = '100%';
+            // Small delay to show the final 100% before hiding
             setTimeout(() => {
-                loadingContainer.style.animation = 'fadeIn 0.5s reverse forwards';
-                iframe.style.opacity = '1';
+                loadingContainer.style.opacity = '0';
+                // Once fade-out finishes, remove loading container & show iframe
+                setTimeout(() => {
+                    loadingContainer.style.display = 'none';
+                    iframe.style.opacity = '1';
+                }, 500);
             }, 800);
         });
 
+        // Handle error case
         iframe.addEventListener('error', () => {
             loadingContainer.innerHTML = `
                 <div class="error-message">
