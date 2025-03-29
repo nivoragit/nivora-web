@@ -5,17 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Swiftstock Live Demo | Nivora</title>
   <style>
-    /* Make sure HTML and body fill the entire window */
     html, body {
       margin: 0;
       padding: 0;
       width: 100%;
       height: 100%;
-      background: #F9F9FF; /* or your chosen background */
+      background: #F9F9FF;
       font-family: 'Segoe UI', system-ui, sans-serif;
+      overflow: hidden;
     }
 
-    /* Let .container take up the full screen */
     .container {
       position: relative;
       width: 100%;
@@ -31,6 +30,7 @@
       padding: 2rem;
       margin: auto;
       transition: opacity 0.5s ease-in-out;
+      z-index: 10;
     }
 
     .progress-container {
@@ -41,6 +41,7 @@
       margin: 2rem auto;
       overflow: hidden;
     }
+
     .progress-bar {
       width: 45%;
       height: 100%;
@@ -49,13 +50,13 @@
       transition: width 0.3s ease;
     }
 
-    /* Loading text styles */
     .loading-message {
       color: #2A5C8B;
       font-size: 1.4rem;
       margin: 1rem 0;
       font-weight: 500;
     }
+
     .loading-subtext {
       color: #666;
       font-size: 0.9rem;
@@ -63,14 +64,12 @@
       margin: 1rem 0;
     }
 
-    /* Make iframe fill the container */
     iframe {
       position: absolute;
       top: 0;
       left: 0;
-      border: none;
       width: 100%;
-      height: 100%;
+      border: none;
       opacity: 0;
       transition: opacity 0.5s ease-in-out;
     }
@@ -81,7 +80,6 @@
       100% { opacity: 1; }
     }
   </style>
-  
 </head>
 <body>
   <div class="container">
@@ -111,14 +109,21 @@
       "Your Swiftstock experience is ready!"
     ];
 
-    // Simulated progress for demonstration
+    // Resize iframe to fit mobile visible area
+    function resizeIframe() {
+      iframe.style.height = `${window.innerHeight}px`;
+    }
+    window.addEventListener('resize', resizeIframe);
+    resizeIframe();
+
+    // Simulated progress
     let progress = 0;
     const progressInterval = setInterval(() => {
       progress = Math.min(progress + Math.random() * 3, 90);
       progressBar.style.width = `${progress}%`;
     }, 500);
 
-    // Dynamic loading messages
+    // Loading messages
     let messageIndex = 0;
     const messageInterval = setInterval(() => {
       if (messageIndex < messages.length) {
@@ -127,13 +132,10 @@
       }
     }, 2500);
 
-    // Hide loading container and show iframe after load
     iframe.addEventListener('load', () => {
       clearInterval(progressInterval);
       clearInterval(messageInterval);
       progressBar.style.width = '100%';
-
-      // Small delay to show final 100%
       setTimeout(() => {
         loadingContainer.style.opacity = '0';
         setTimeout(() => {
