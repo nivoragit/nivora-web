@@ -1,166 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Swiftstock Live Demo | Nivora</title>
-    <style>
-        :root {
-            --primary-brand: #2A5C8B;
-            --secondary-brand: #FF7F41;
-            --accent-color: #8BC34A;
-            --background: #F9F9FF;
-        }
+  <meta charset="UTF-8">
+  <title>Swiftstock Live Demo | Nivora</title>
+  <style>
+    /* Make sure HTML and body fill the entire window */
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #F9F9FF; /* or your chosen background */
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
 
-        body {
-            margin: 0;
-            background: var(--background);
-            font-family: 'Segoe UI', system-ui, sans-serif;
-        }
+    /* Let .container take up the full screen */
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-        .container {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    .loading-container {
+      text-align: center;
+      max-width: 400px;
+      padding: 2rem;
+      margin: auto;
+      transition: opacity 0.5s ease-in-out;
+    }
 
-        .loading-container {
-            text-align: center;
-            max-width: 400px;
-            padding: 2rem;
-            margin: auto;
-            transition: opacity 0.5s ease-in-out;
-        }
+    .progress-container {
+      width: 200px;
+      height: 4px;
+      background: rgba(0,0,0,0.1);
+      border-radius: 2px;
+      margin: 2rem auto;
+      overflow: hidden;
+    }
+    .progress-bar {
+      width: 45%;
+      height: 100%;
+      background: linear-gradient(90deg, #2A5C8B, #FF7F41);
+      animation: progress-pulse 2s ease-in-out infinite;
+      transition: width 0.3s ease;
+    }
 
-        .logo {
-            width: 120px;
-            margin-bottom: 1.5rem;
-            opacity: 0.9;
-        }
+    /* Loading text styles */
+    .loading-message {
+      color: #2A5C8B;
+      font-size: 1.4rem;
+      margin: 1rem 0;
+      font-weight: 500;
+    }
+    .loading-subtext {
+      color: #666;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin: 1rem 0;
+    }
 
-        .progress-container {
-            width: 200px;
-            height: 4px;
-            background: rgba(0,0,0,0.1);
-            border-radius: 2px;
-            margin: 2rem auto;
-            overflow: hidden;
-        }
+    /* Make iframe fill the container */
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      border: none;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
 
-        .progress-bar {
-            width: 45%;
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-brand), var(--secondary-brand));
-            animation: progress-pulse 2s ease-in-out infinite;
-            transition: width 0.3s ease;
-        }
-
-        .loading-message {
-            color: var(--primary-brand);
-            font-size: 1.4rem;
-            margin: 1rem 0;
-            font-weight: 500;
-        }
-
-        .loading-subtext {
-            color: #666;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            margin: 1rem 0;
-        }
-
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        @keyframes progress-pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-    </style>
+    @keyframes progress-pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="loading-container" id="loadingContainer">
-            <div class="loading-message" id="loadingMessage">
-                Setting up your Swiftstock Live Demo...
-            </div>
-
-            <div class="progress-container">
-                <div class="progress-bar" id="progressBar"></div>
-            </div>
-
-            <div class="loading-subtext">
-                Did you know? Swiftstock is built to shrink the gap between two sells—because every millisecond counts when you're chasing the perfect trade.
-            </div>
-        </div>
-
-        <iframe id="contentFrame" src="https://swisstock.netlify.app/" loading="eager"></iframe>
+  <div class="container">
+    <div class="loading-container" id="loadingContainer">
+      <div class="loading-message" id="loadingMessage">
+        Setting up your Swiftstock Live Demo...
+      </div>
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <div class="loading-subtext">
+        Did you know? Swiftstock is built to shrink the gap between two sells—because every millisecond counts when you're chasing the perfect trade.
+      </div>
     </div>
 
-    <script>
-        const iframe = document.getElementById('contentFrame');
-        const loadingContainer = document.getElementById('loadingContainer');
-        const progressBar = document.getElementById('progressBar');
-        const messages = [
-            "Finalizing live data feed setup...",
-            "Optimizing chart performance...",
-            "Almost there!",
-            "Your Swiftstock experience is ready!"
-        ];
+    <iframe id="contentFrame" src="https://swisstock.netlify.app/" loading="eager"></iframe>
+  </div>
 
-        // Simulated progress for demonstration
-        let progress = 0;
-        const progressInterval = setInterval(() => {
-            progress = Math.min(progress + Math.random() * 3, 90);
-            progressBar.style.width = `${progress}%`;
+  <script>
+    const iframe = document.getElementById('contentFrame');
+    const loadingContainer = document.getElementById('loadingContainer');
+    const progressBar = document.getElementById('progressBar');
+    const messages = [
+      "Finalizing live data feed setup...",
+      "Optimizing chart performance...",
+      "Almost there!",
+      "Your Swiftstock experience is ready!"
+    ];
+
+    // Simulated progress for demonstration
+    let progress = 0;
+    const progressInterval = setInterval(() => {
+      progress = Math.min(progress + Math.random() * 3, 90);
+      progressBar.style.width = `${progress}%`;
+    }, 500);
+
+    // Dynamic loading messages
+    let messageIndex = 0;
+    const messageInterval = setInterval(() => {
+      if (messageIndex < messages.length) {
+        document.getElementById('loadingMessage').textContent = messages[messageIndex];
+        messageIndex++;
+      }
+    }, 2500);
+
+    // Hide loading container and show iframe after load
+    iframe.addEventListener('load', () => {
+      clearInterval(progressInterval);
+      clearInterval(messageInterval);
+      progressBar.style.width = '100%';
+
+      // Small delay to show final 100%
+      setTimeout(() => {
+        loadingContainer.style.opacity = '0';
+        setTimeout(() => {
+          loadingContainer.style.display = 'none';
+          iframe.style.opacity = '1';
         }, 500);
+      }, 800);
+    });
 
-        // Dynamic loading messages
-        let messageIndex = 0;
-        const messageInterval = setInterval(() => {
-            if (messageIndex < messages.length) {
-                document.getElementById('loadingMessage').textContent = messages[messageIndex];
-                messageIndex++;
-            }
-        }, 2500);
-
-        // Hide loading container and show iframe after load
-        iframe.addEventListener('load', () => {
-            clearInterval(progressInterval);
-            clearInterval(messageInterval);
-            progressBar.style.width = '100%';
-            // Small delay to show the final 100% before hiding
-            setTimeout(() => {
-                loadingContainer.style.opacity = '0';
-                // Once fade-out finishes, remove loading container & show iframe
-                setTimeout(() => {
-                    loadingContainer.style.display = 'none';
-                    iframe.style.opacity = '1';
-                }, 500);
-            }, 800);
-        });
-
-        // Handle error case
-        iframe.addEventListener('error', () => {
-            loadingContainer.innerHTML = `
-                <div class="error-message">
-                    <h2>Oops! Something went wrong</h2>
-                    <p>We're having trouble loading Swiftstock. Please check your connection and try again.</p>
-                    <button onclick="window.location.reload()">Retry</button>
-                </div>
-            `;
-        });
-    </script>
+    iframe.addEventListener('error', () => {
+      loadingContainer.innerHTML = `
+        <div class="error-message">
+          <h2>Oops! Something went wrong</h2>
+          <p>We're having trouble loading Swiftstock. Please check your connection and try again.</p>
+          <button onclick="window.location.reload()">Retry</button>
+        </div>
+      `;
+    });
+  </script>
 </body>
 </html>
