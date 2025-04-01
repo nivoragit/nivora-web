@@ -157,14 +157,11 @@
       border-radius: 15px;
       overflow: hidden;
     }
-    .slide {
-      display: none;
-      position: relative;
-    }
+    /* Ensure images preserve 720 x 1450 aspect ratio by removing fixed height */
     .slide img {
       width: 100%;
-      height: 500px;
-      object-fit: cover;
+      height: auto; /* maintain aspect ratio */
+      display: block;
     }
     .caption {
       background: linear-gradient(transparent, rgba(0,0,0,0.8));
@@ -294,7 +291,6 @@
       nav ul { margin-top: 15px; }
       .hero h1 { font-size: 32px; }
       .hero p { font-size: 18px; }
-      .slide img { height: 300px; }
     }
   </style>
 </head>
@@ -314,35 +310,86 @@
   <section class="hero" id="home">
     <h1>SwiftStock: Fast, Familiar, and Mobile</h1>
     <p>Record transactions on the fly with the speed of a calculator and the precision of a dedicated sales app.</p>
-    <a href="https://nivoragit.github.io/nivora-web/swiftstock/demo" class="cta-button">Live Demo</a>
+    <a href="live-demo.html" class="cta-button">Live Demo</a>
   </section>
 
   <section class="features" id="features">
     <h2>Powerful Features for Modern Sales</h2>
     <div class="feature-list">
-      <div class="feature-item"><h3>Calculator-Based Speed</h3><p>Seamlessly integrates sales recording with a familiar calculator interface.</p></div>
-      <div class="feature-item"><h3>Dynamic Keyboard</h3><p>Displays only relevant keys to minimize input errors.</p></div>
-      <div class="feature-item"><h3>Multiple Item Naming</h3><p>Supports searching, display, and English names for versatile usage.</p></div>
-      <div class="feature-item"><h3>Mod Quantity</h3><p>Allows for predefined and custom quantities to handle variable sales.</p></div>
-      <div class="feature-item"><h3>CSV Import/Export</h3><p>Facilitates easy data transfer for reporting and record-keeping.</p></div>
-      <div class="feature-item"><h3>Reporting & Logs</h3><p>Provides detailed CSV reports and activity logs for transparency.</p></div>
-      <div class="feature-item"><h3>Smart Keyboard</h3><p>Context-aware keys prevent input errors.</p></div>
-      <div class="feature-item"><h3>Bilingual Support</h3><p>Native language support with English reporting.</p></div>
-      <div class="feature-item"><h3>Real-Time Analytics</h3><p>Instant CSV reports and inventory tracking.</p></div>
+      <div class="feature-item">
+        <h3>Calculator-Based Speed</h3>
+        <p>Seamlessly integrates sales recording with a familiar calculator interface.</p>
+      </div>
+      <div class="feature-item">
+        <h3>Dynamic Keyboard</h3>
+        <p>Displays only relevant keys to minimize input errors.</p>
+      </div>
+      <div class="feature-item">
+        <h3>Multiple Item Naming</h3>
+        <p>Supports searching, display, and English names for versatile usage.</p>
+      </div>
+      <div class="feature-item">
+        <h3>Mod Quantity</h3>
+        <p>Allows for predefined and custom quantities to handle variable sales.</p>
+      </div>
+      <div class="feature-item">
+        <h3>CSV Import/Export</h3>
+        <p>Facilitates easy data transfer for reporting and record-keeping.</p>
+      </div>
+      <div class="feature-item">
+        <h3>Reporting & Logs</h3>
+        <p>Provides detailed CSV reports and activity logs for transparency.</p>
+      </div>
+      <div class="feature-item">
+        <h3>Smart Keyboard</h3>
+        <p>Context-aware keys prevent input errors.</p>
+      </div>
+      <div class="feature-item">
+        <h3>Bilingual Support</h3>
+        <p>Native language support with English reporting.</p>
+      </div>
+      <div class="feature-item">
+        <h3>Real-Time Analytics</h3>
+        <p>Instant CSV reports and inventory tracking.</p>
+      </div>
     </div>
   </section>
 
   <section class="slideshow">
     <h2>SwiftStock in Action</h2>
     <div class="slideshow-container">
-      <div class="slide"><img src="./settings-screen.jpg" alt="Settings"><div class="caption">Settings Screen: Customize keyboard, mod counts, and CSV import.</div></div>
-      <div class="slide"><img src="./extended-settings.jpg" alt="Extended"><div class="caption">Extended Settings: Export, add, and edit items with ease.</div></div>
-      <div class="slide"><img src="./home-screen.jpg" alt="Home"><div class="caption">Home Screen: Clean and intuitive transaction starting point.</div></div>
-      <div class="slide"><img src="./dynamic-keyboard.jpg" alt="Keyboard"><div class="caption">Dynamic Keyboard: Adaptive keys for faster inputs.</div></div>
-      <div class="slide"><img src="search-screen.jpg" alt="Search"><div class="caption">Search Screen: Bilingual names and quantity options.</div></div>
-      <div class="slide"><img src="./shopping-cart.jpg" alt="Cart"><div class="caption">Shopping Cart: Real-time totals with item management.</div></div>
-      <div class="slide"><img src="./payment-input.jpg" alt="Payment"><div class="caption">Payment Input: Enter payment and calculate balance fast.</div></div>
-      <div class="slide"><img src="./balance-screen.jpg" alt="Balance"><div class="caption">Balance Screen: Instantly shows customer change due.</div></div>
+      <div class="slide">
+        <img src="settings-screen.jpg" alt="Settings">
+        <div class="caption">Settings Screen: Customize keyboard, mod counts, and CSV import.</div>
+      </div>
+      <div class="slide">
+        <img src="extended-settings.jpg" alt="Extended">
+        <div class="caption">Extended Settings: Export, add, and edit items with ease.</div>
+      </div>
+      <div class="slide">
+        <img src="home-screen.jpg" alt="Home">
+        <div class="caption">Home Screen: Clean and intuitive transaction starting point.</div>
+      </div>
+      <div class="slide">
+        <img src="dynamic-keyboard.jpg" alt="Keyboard">
+        <div class="caption">Dynamic Keyboard: Adaptive keys for faster inputs.</div>
+      </div>
+      <div class="slide">
+        <img src="search-screen.jpg" alt="Search">
+        <div class="caption">Search Screen: Bilingual names and quantity options.</div>
+      </div>
+      <div class="slide">
+        <img src="shopping-cart.jpg" alt="Cart">
+        <div class="caption">Shopping Cart: Real-time totals with item management.</div>
+      </div>
+      <div class="slide">
+        <img src="payment-input.jpg" alt="Payment">
+        <div class="caption">Payment Input: Enter payment and calculate balance fast.</div>
+      </div>
+      <div class="slide">
+        <img src="balance-screen.jpg" alt="Balance">
+        <div class="caption">Balance Screen: Instantly shows customer change due.</div>
+      </div>
       <a class="prev" onclick="changeSlide(-1)">❮</a>
       <a class="next" onclick="changeSlide(1)">❯</a>
     </div>
@@ -353,9 +400,18 @@
     <h2>Get In Touch</h2>
     <p>We are ready to customize SwiftStock to your specific requirements. Reach out for a demo or a custom build.</p>
     <form>
-      <div class="form-group"><input type="text" class="form-input" placeholder=" "><label class="form-label">Your Name</label></div>
-      <div class="form-group"><input type="email" class="form-input" placeholder=" "><label class="form-label">Your Email</label></div>
-      <div class="form-group"><textarea class="form-input" rows="4" placeholder=" "></textarea><label class="form-label">How can we help you?</label></div>
+      <div class="form-group">
+        <input type="text" class="form-input" placeholder=" ">
+        <label class="form-label">Your Name</label>
+      </div>
+      <div class="form-group">
+        <input type="email" class="form-input" placeholder=" ">
+        <label class="form-label">Your Email</label>
+      </div>
+      <div class="form-group">
+        <textarea class="form-input" rows="4" placeholder=" "></textarea>
+        <label class="form-label">How can we help you?</label>
+      </div>
       <button type="submit">Send Message</button>
     </form>
   </section>
@@ -372,18 +428,28 @@
     function showSlides() {
       let slides = document.getElementsByClassName("slide");
       let dots = document.getElementsByClassName("dot");
-      for (let i = 0; i < slides.length; i++) slides[i].style.display = "none";
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
       slideIndex++;
-      if (slideIndex > slides.length) slideIndex = 1;
-      for (let i = 0; i < dots.length; i++) dots[i].className = dots[i].className.replace(" active-dot", "");
+      if (slideIndex > slides.length) {
+        slideIndex = 1;
+      }
+      for (let i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active-dot", "");
+      }
       slides[slideIndex - 1].style.display = "block";
-      if (dots[slideIndex - 1]) dots[slideIndex - 1].className += " active-dot";
+      if (dots[slideIndex - 1]) {
+        dots[slideIndex - 1].className += " active-dot";
+      }
       setTimeout(showSlides, 5000);
     }
 
     function changeSlide(n) {
       slideIndex += n - 1;
-      if (slideIndex < 0) slideIndex = 0;
+      if (slideIndex < 0) {
+        slideIndex = 0;
+      }
       showSlides();
     }
 
@@ -402,7 +468,9 @@
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
       });
     });
   </script>
