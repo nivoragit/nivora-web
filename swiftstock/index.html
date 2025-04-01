@@ -83,8 +83,7 @@
       margin-bottom: 30px;
       color: #444;
       max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
+      margin: 0 auto;
     }
     .cta-button {
       background: linear-gradient(135deg, var(--secondary) 0%, #FF9100 100%);
@@ -103,6 +102,7 @@
       transform: translateY(-3px);
       box-shadow: 0 7px 20px rgba(255,109,0,0.4);
     }
+
     .features {
       padding: 60px 20px;
       text-align: center;
@@ -140,6 +140,8 @@
       font-size: 16px;
       color: #555;
     }
+
+    /* Slideshow with responsive images */
     .slideshow {
       padding: 60px 20px;
       background: #f5f5f5;
@@ -157,11 +159,16 @@
       border-radius: 15px;
       overflow: hidden;
     }
-    /* Ensure images preserve 720 x 1450 aspect ratio by removing fixed height */
+    /* 
+      By using width: 100%; height: auto, 
+      images will scale proportionally to fit the container 
+      while maintaining their aspect ratio (720x1450, etc.).
+    */
     .slide img {
       width: 100%;
-      height: auto; /* maintain aspect ratio */
+      height: auto;
       display: block;
+      object-fit: contain; /* ensures the entire image is visible without cropping */
     }
     .caption {
       background: linear-gradient(transparent, rgba(0,0,0,0.8));
@@ -185,6 +192,7 @@
       transform: translateY(-50%);
       background: rgba(0, 0, 0, 0.5);
       border-radius: 50%;
+      transition: background 0.3s ease;
     }
     .prev:hover,
     .next:hover {
@@ -208,6 +216,7 @@
     .active-dot, .dot:hover {
       background-color: var(--primary);
     }
+
     .contact {
       padding: 60px 20px;
       background: white;
@@ -286,6 +295,8 @@
     footer a:hover {
       color: #FF9100;
     }
+
+    /* Make slides scale and look good on smaller devices */
     @media (max-width: 768px) {
       header { flex-direction: column; }
       nav ul { margin-top: 15px; }
@@ -360,35 +371,51 @@
     <div class="slideshow-container">
       <div class="slide">
         <img src="settings-screen.jpg" alt="Settings">
-        <div class="caption">Settings Screen: Customize keyboard, mod counts, and CSV import.</div>
+        <div class="caption">
+          Settings Screen: Customize keyboard, mod counts, and CSV import.
+        </div>
       </div>
       <div class="slide">
         <img src="extended-settings.jpg" alt="Extended">
-        <div class="caption">Extended Settings: Export, add, and edit items with ease.</div>
+        <div class="caption">
+          Extended Settings: Export, add, and edit items with ease.
+        </div>
       </div>
       <div class="slide">
         <img src="home-screen.jpg" alt="Home">
-        <div class="caption">Home Screen: Clean and intuitive transaction starting point.</div>
+        <div class="caption">
+          Home Screen: Clean and intuitive transaction starting point.
+        </div>
       </div>
       <div class="slide">
         <img src="dynamic-keyboard.jpg" alt="Keyboard">
-        <div class="caption">Dynamic Keyboard: Adaptive keys for faster inputs.</div>
+        <div class="caption">
+          Dynamic Keyboard: Adaptive keys for faster inputs.
+        </div>
       </div>
       <div class="slide">
         <img src="search-screen.jpg" alt="Search">
-        <div class="caption">Search Screen: Bilingual names and quantity options.</div>
+        <div class="caption">
+          Search Screen: Bilingual names and quantity options.
+        </div>
       </div>
       <div class="slide">
         <img src="shopping-cart.jpg" alt="Cart">
-        <div class="caption">Shopping Cart: Real-time totals with item management.</div>
+        <div class="caption">
+          Shopping Cart: Real-time totals with item management.
+        </div>
       </div>
       <div class="slide">
         <img src="payment-input.jpg" alt="Payment">
-        <div class="caption">Payment Input: Enter payment and calculate balance fast.</div>
+        <div class="caption">
+          Payment Input: Enter payment and calculate balance fast.
+        </div>
       </div>
       <div class="slide">
         <img src="balance-screen.jpg" alt="Balance">
-        <div class="caption">Balance Screen: Instantly shows customer change due.</div>
+        <div class="caption">
+          Balance Screen: Instantly shows customer change due.
+        </div>
       </div>
       <a class="prev" onclick="changeSlide(-1)">❮</a>
       <a class="next" onclick="changeSlide(1)">❯</a>
@@ -418,7 +445,11 @@
 
   <footer>
     <p>&copy; 2025 Nivora (Pvt) Ltd. All rights reserved.</p>
-    <p>Follow our journey: <a href="#">Twitter</a> • <a href="#">LinkedIn</a> • <a href="#">Instagram</a></p>
+    <p>Follow our journey: 
+      <a href="#">Twitter</a> • 
+      <a href="#">LinkedIn</a> • 
+      <a href="#">Instagram</a>
+    </p>
   </footer>
 
   <script>
@@ -426,8 +457,8 @@
     showSlides();
 
     function showSlides() {
-      let slides = document.getElementsByClassName("slide");
-      let dots = document.getElementsByClassName("dot");
+      const slides = document.getElementsByClassName("slide");
+      const dots = document.getElementsByClassName("dot");
       for (let i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
       }
@@ -465,6 +496,7 @@
       dotContainer.appendChild(dot);
     });
 
+    // Smooth Scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
