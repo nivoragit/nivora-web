@@ -83,7 +83,8 @@
       margin-bottom: 30px;
       color: #444;
       max-width: 800px;
-      margin: 0 auto;
+      margin-left: auto;
+      margin-right: auto;
     }
     .cta-button {
       background: linear-gradient(135deg, var(--secondary) 0%, #FF9100 100%);
@@ -102,7 +103,6 @@
       transform: translateY(-3px);
       box-shadow: 0 7px 20px rgba(255,109,0,0.4);
     }
-
     .features {
       padding: 60px 20px;
       text-align: center;
@@ -140,8 +140,6 @@
       font-size: 16px;
       color: #555;
     }
-
-    /* Slideshow with responsive images */
     .slideshow {
       padding: 60px 20px;
       background: #f5f5f5;
@@ -154,45 +152,57 @@
     }
     .slideshow-container {
       position: relative;
-      max-width: 1000px;
+      max-width: 90%;
       margin: auto;
       border-radius: 15px;
       overflow: hidden;
+      aspect-ratio: 720/1450;
     }
-    /* 
-      By using width: 100%; height: auto, 
-      images will scale proportionally to fit the container 
-      while maintaining their aspect ratio (720x1450, etc.).
-    */
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+    .slide.active {
+      opacity: 1;
+    }
     .slide img {
       width: 100%;
-      height: auto;
-      display: block;
-      object-fit: contain; /* ensures the entire image is visible without cropping */
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
     }
     .caption {
-      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      background: linear-gradient(transparent, rgba(0,0,0,0.9));
       color: #fff;
-      padding: 20px;
+      padding: 15px;
       position: absolute;
       bottom: 0;
       width: 100%;
-      box-sizing: border-box;
-      font-size: 18px;
+      text-align: center;
+      font-size: clamp(14px, 2vw, 18px);
     }
     .prev,
     .next {
       cursor: pointer;
       position: absolute;
       top: 50%;
-      padding: 20px;
-      font-size: 24px;
-      color: white;
-      user-select: none;
       transform: translateY(-50%);
-      background: rgba(0, 0, 0, 0.5);
+      padding: 15px;
+      color: white;
+      font-weight: bold;
+      font-size: 24px;
+      user-select: none;
+      background: rgba(0, 0, 0, 0.4);
       border-radius: 50%;
       transition: background 0.3s ease;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .prev:hover,
     .next:hover {
@@ -201,22 +211,27 @@
     .prev { left: 20px; }
     .next { right: 20px; }
     .dot-container {
-      text-align: center;
       padding: 20px 0;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
     }
     .dot {
       cursor: pointer;
-      height: 15px;
-      width: 15px;
-      margin: 0 8px;
-      background-color: #ddd;
+      width: 16px;
+      height: 16px;
+      background-color: #bbb;
       border-radius: 50%;
-      display: inline-block;
+      transition: all 0.3s ease;
+      border: none;
     }
-    .active-dot, .dot:hover {
+    .dot:hover {
+      transform: scale(1.2);
+    }
+    .active-dot {
       background-color: var(--primary);
+      transform: scale(1.2);
     }
-
     .contact {
       padding: 60px 20px;
       background: white;
@@ -295,13 +310,25 @@
     footer a:hover {
       color: #FF9100;
     }
-
-    /* Make slides scale and look good on smaller devices */
     @media (max-width: 768px) {
       header { flex-direction: column; }
       nav ul { margin-top: 15px; }
       .hero h1 { font-size: 32px; }
       .hero p { font-size: 18px; }
+      .slideshow-container {
+        max-width: 100%;
+        border-radius: 0;
+      }
+      .prev,
+      .next {
+        width: 35px;
+        height: 35px;
+        font-size: 20px;
+      }
+      .dot {
+        width: 14px;
+        height: 14px;
+      }
     }
   </style>
 </head>
@@ -327,98 +354,31 @@
   <section class="features" id="features">
     <h2>Powerful Features for Modern Sales</h2>
     <div class="feature-list">
-      <div class="feature-item">
-        <h3>Calculator-Based Speed</h3>
-        <p>Seamlessly integrates sales recording with a familiar calculator interface.</p>
-      </div>
-      <div class="feature-item">
-        <h3>Dynamic Keyboard</h3>
-        <p>Displays only relevant keys to minimize input errors.</p>
-      </div>
-      <div class="feature-item">
-        <h3>Multiple Item Naming</h3>
-        <p>Supports searching, display, and English names for versatile usage.</p>
-      </div>
-      <div class="feature-item">
-        <h3>Mod Quantity</h3>
-        <p>Allows for predefined and custom quantities to handle variable sales.</p>
-      </div>
-      <div class="feature-item">
-        <h3>CSV Import/Export</h3>
-        <p>Facilitates easy data transfer for reporting and record-keeping.</p>
-      </div>
-      <div class="feature-item">
-        <h3>Reporting & Logs</h3>
-        <p>Provides detailed CSV reports and activity logs for transparency.</p>
-      </div>
-      <div class="feature-item">
-        <h3>Smart Keyboard</h3>
-        <p>Context-aware keys prevent input errors.</p>
-      </div>
-      <div class="feature-item">
-        <h3>Bilingual Support</h3>
-        <p>Native language support with English reporting.</p>
-      </div>
-      <div class="feature-item">
-        <h3>Real-Time Analytics</h3>
-        <p>Instant CSV reports and inventory tracking.</p>
-      </div>
+      <div class="feature-item"><h3>Calculator-Based Speed</h3><p>Seamlessly integrates sales recording with a familiar calculator interface.</p></div>
+      <div class="feature-item"><h3>Dynamic Keyboard</h3><p>Displays only relevant keys to minimize input errors.</p></div>
+      <div class="feature-item"><h3>Multiple Item Naming</h3><p>Supports searching, display, and English names for versatile usage.</p></div>
+      <div class="feature-item"><h3>Mod Quantity</h3><p>Allows for predefined and custom quantities to handle variable sales.</p></div>
+      <div class="feature-item"><h3>CSV Import/Export</h3><p>Facilitates easy data transfer for reporting and record-keeping.</p></div>
+      <div class="feature-item"><h3>Reporting & Logs</h3><p>Provides detailed CSV reports and activity logs for transparency.</p></div>
+      <div class="feature-item"><h3>Smart Keyboard</h3><p>Context-aware keys prevent input errors.</p></div>
+      <div class="feature-item"><h3>Bilingual Support</h3><p>Native language support with English reporting.</p></div>
+      <div class="feature-item"><h3>Real-Time Analytics</h3><p>Instant CSV reports and inventory tracking.</p></div>
     </div>
   </section>
 
   <section class="slideshow">
     <h2>SwiftStock in Action</h2>
     <div class="slideshow-container">
-      <div class="slide">
-        <img src="settings-screen.jpg" alt="Settings">
-        <div class="caption">
-          Settings Screen: Customize keyboard, mod counts, and CSV import.
-        </div>
-      </div>
-      <div class="slide">
-        <img src="extended-settings.jpg" alt="Extended">
-        <div class="caption">
-          Extended Settings: Export, add, and edit items with ease.
-        </div>
-      </div>
-      <div class="slide">
-        <img src="home-screen.jpg" alt="Home">
-        <div class="caption">
-          Home Screen: Clean and intuitive transaction starting point.
-        </div>
-      </div>
-      <div class="slide">
-        <img src="dynamic-keyboard.jpg" alt="Keyboard">
-        <div class="caption">
-          Dynamic Keyboard: Adaptive keys for faster inputs.
-        </div>
-      </div>
-      <div class="slide">
-        <img src="search-screen.jpg" alt="Search">
-        <div class="caption">
-          Search Screen: Bilingual names and quantity options.
-        </div>
-      </div>
-      <div class="slide">
-        <img src="shopping-cart.jpg" alt="Cart">
-        <div class="caption">
-          Shopping Cart: Real-time totals with item management.
-        </div>
-      </div>
-      <div class="slide">
-        <img src="payment-input.jpg" alt="Payment">
-        <div class="caption">
-          Payment Input: Enter payment and calculate balance fast.
-        </div>
-      </div>
-      <div class="slide">
-        <img src="balance-screen.jpg" alt="Balance">
-        <div class="caption">
-          Balance Screen: Instantly shows customer change due.
-        </div>
-      </div>
-      <a class="prev" onclick="changeSlide(-1)">❮</a>
-      <a class="next" onclick="changeSlide(1)">❯</a>
+      <div class="slide active"><img src="./settings-screen.jpg" alt="Settings"><div class="caption">Settings Screen: Customize keyboard, mod counts, and CSV import.</div></div>
+      <div class="slide"><img src="./extended-settings.jpg" alt="Extended"><div class="caption">Extended Settings: Export, add, and edit items with ease.</div></div>
+      <div class="slide"><img src="./home-screen.jpg" alt="Home"><div class="caption">Home Screen: Clean and intuitive transaction starting point.</div></div>
+      <div class="slide"><img src="./dynamic-keyboard.jpg" alt="Keyboard"><div class="caption">Dynamic Keyboard: Adaptive keys for faster inputs.</div></div>
+      <div class="slide"><img src="./search-screen.jpg" alt="Search"><div class="caption">Search Screen: Bilingual names and quantity options.</div></div>
+      <div class="slide"><img src="./shopping-cart.jpg" alt="Cart"><div class="caption">Shopping Cart: Real-time totals with item management.</div></div>
+      <div class="slide"><img src="./payment-input.jpg" alt="Payment"><div class="caption">Payment Input: Enter payment and calculate balance fast.</div></div>
+      <div class="slide"><img src="./balance-screen.jpg" alt="Balance"><div class="caption">Balance Screen: Instantly shows customer change due.</div></div>
+      <a class="prev" onclick="changeSlide(-1)" aria-label="Previous slide">❮</a>
+      <a class="next" onclick="changeSlide(1)" aria-label="Next slide">❯</a>
     </div>
     <div class="dot-container"></div>
   </section>
@@ -427,82 +387,113 @@
     <h2>Get In Touch</h2>
     <p>We are ready to customize SwiftStock to your specific requirements. Reach out for a demo or a custom build.</p>
     <form>
-      <div class="form-group">
-        <input type="text" class="form-input" placeholder=" ">
-        <label class="form-label">Your Name</label>
-      </div>
-      <div class="form-group">
-        <input type="email" class="form-input" placeholder=" ">
-        <label class="form-label">Your Email</label>
-      </div>
-      <div class="form-group">
-        <textarea class="form-input" rows="4" placeholder=" "></textarea>
-        <label class="form-label">How can we help you?</label>
-      </div>
+      <div class="form-group"><input type="text" class="form-input" placeholder=" "><label class="form-label">Your Name</label></div>
+      <div class="form-group"><input type="email" class="form-input" placeholder=" "><label class="form-label">Your Email</label></div>
+      <div class="form-group"><textarea class="form-input" rows="4" placeholder=" "></textarea><label class="form-label">How can we help you?</label></div>
       <button type="submit">Send Message</button>
     </form>
   </section>
 
   <footer>
     <p>&copy; 2025 Nivora (Pvt) Ltd. All rights reserved.</p>
-    <p>Follow our journey: 
-      <a href="#">Twitter</a> • 
-      <a href="#">LinkedIn</a> • 
-      <a href="#">Instagram</a>
-    </p>
+    <p>Follow our journey: <a href="#">Twitter</a> • <a href="#">LinkedIn</a> • <a href="#">Instagram</a></p>
   </footer>
 
   <script>
     let slideIndex = 0;
-    showSlides();
+    let autoSlideInterval;
+    const slideDuration = 5000;
 
-    function showSlides() {
-      const slides = document.getElementsByClassName("slide");
-      const dots = document.getElementsByClassName("dot");
-      for (let i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-      }
-      slideIndex++;
-      if (slideIndex > slides.length) {
-        slideIndex = 1;
-      }
-      for (let i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active-dot", "");
-      }
-      slides[slideIndex - 1].style.display = "block";
-      if (dots[slideIndex - 1]) {
-        dots[slideIndex - 1].className += " active-dot";
-      }
-      setTimeout(showSlides, 5000);
-    }
-
-    function changeSlide(n) {
-      slideIndex += n - 1;
-      if (slideIndex < 0) {
-        slideIndex = 0;
-      }
-      showSlides();
-    }
-
-    const dotContainer = document.querySelector('.dot-container');
-    const slides = document.querySelectorAll('.slide');
-    slides.forEach((_, i) => {
-      const dot = document.createElement('span');
-      dot.className = 'dot';
-      dot.addEventListener('click', () => {
-        slideIndex = i;
-        showSlides();
-      });
-      dotContainer.appendChild(dot);
+    // Initialize slideshow
+    document.addEventListener('DOMContentLoaded', () => {
+      createDots();
+      showSlide(slideIndex);
+      startAutoSlide();
+      addTouchSupport();
     });
 
-    // Smooth Scroll
+    function createDots() {
+      const dotContainer = document.querySelector('.dot-container');
+      const slides = document.querySelectorAll('.slide');
+      
+      slides.forEach((_, index) => {
+        const dot = document.createElement('button');
+        dot.className = 'dot';
+        dot.setAttribute('aria-label', `View slide ${index + 1}`);
+        dot.addEventListener('click', () => goToSlide(index));
+        dotContainer.appendChild(dot);
+      });
+    }
+
+    function showSlide(index) {
+      const slides = document.querySelectorAll('.slide');
+      const dots = document.querySelectorAll('.dot');
+      
+      // Wrap around indexes
+      if (index >= slides.length) index = 0;
+      if (index < 0) index = slides.length - 1;
+      slideIndex = index;
+      
+      // Update slides
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+      
+      // Update dots
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active-dot', i === index);
+      });
+    }
+
+    function changeSlide(offset) {
+      showSlide(slideIndex + offset);
+      resetAutoSlide();
+    }
+
+    function goToSlide(index) {
+      showSlide(index);
+      resetAutoSlide();
+    }
+
+    function startAutoSlide() {
+      autoSlideInterval = setInterval(() => changeSlide(1), slideDuration);
+    }
+
+    function resetAutoSlide() {
+      clearInterval(autoSlideInterval);
+      startAutoSlide();
+    }
+
+    function addTouchSupport() {
+      const slider = document.querySelector('.slideshow-container');
+      let touchStartX = 0;
+      const swipeThreshold = 50;
+
+      slider.addEventListener('touchstart', e => {
+        touchStartX = e.touches[0].clientX;
+      }, { passive: true });
+
+      slider.addEventListener('touchend', e => {
+        const touchEndX = e.changedTouches[0].clientX;
+        const deltaX = touchStartX - touchEndX;
+
+        if (Math.abs(deltaX) > swipeThreshold) {
+          changeSlide(deltaX > 0 ? 1 : -1);
+        }
+      }, { passive: true });
+    }
+
+    // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
+      anchor.addEventListener('click', function(e) {
         e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
-        });
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
       });
     });
   </script>
