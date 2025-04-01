@@ -152,11 +152,12 @@
     }
     .slideshow-container {
       position: relative;
-      max-width: 90%;
+      max-width: 80%;
       margin: auto;
       border-radius: 15px;
       overflow: hidden;
       aspect-ratio: 720/1450;
+      background: #fff;
     }
     .slide {
       position: absolute;
@@ -173,6 +174,8 @@
       height: 100%;
       object-fit: contain;
       object-position: center;
+      padding: 10px; /* Creates breathing space around images */
+      box-sizing: border-box;
     }
     .caption {
       background: linear-gradient(transparent, rgba(0,0,0,0.9));
@@ -315,9 +318,15 @@
       nav ul { margin-top: 15px; }
       .hero h1 { font-size: 32px; }
       .hero p { font-size: 18px; }
+      .slideshow {
+        padding: 30px 15px; /* Reduced vertical padding */
+      }
       .slideshow-container {
-        max-width: 100%;
+        max-width: 95%;
         border-radius: 0;
+      }
+      .slide img {
+        padding: 5px; /* Reduced padding for mobile */
       }
       .prev,
       .next {
@@ -328,6 +337,12 @@
       .dot {
         width: 14px;
         height: 14px;
+      }
+    }
+    /* Large desktop screens */
+    @media (min-width: 1200px) {
+      .slideshow-container {
+        max-width: 1100px; /* Absolute maximum size */
       }
     }
   </style>
