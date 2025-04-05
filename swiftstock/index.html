@@ -508,6 +508,49 @@
         }
       }
     }
+
+    /* ================== NOTIFICATION STYLES ================== */
+    .notification {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 15px 30px;
+      border-radius: 50px;
+      font-weight: 500;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      z-index: 2000;
+      animation: slideIn 0.3s ease-out;
+    }
+    .notification.show {
+      display: flex;
+    }
+    .notification.success {
+      background: var(--success);
+      color: white;
+    }
+    .notification.error {
+      background: var(--secondary);
+      color: white;
+    }
+    @keyframes slideIn {
+      from { top: -50px; opacity: 0; }
+      to   { top: 20px; opacity: 1; }
+    }
+
+    /* Non-JS Slideshow Fallback */
+    .prev, .next {
+      display: none; /* Hidden by default, shown in <noscript> */
+    }
+    .slide {
+      display: none; /* Hidden by default, shown if active or via :target */
+    }
+    .slide.active {
+      display: block;
+    }
   </style>
 </head>
 <body>
@@ -516,8 +559,7 @@
     <nav>
       <ul>
         <li><a href="#home">Home</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#customization">Customization</a></li>
+        <li><a href="#features">Features</a></li>    
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
@@ -574,40 +616,62 @@
   <section class="slideshow">
     <h2>SwiftStock in Action</h2>
     <div class="slideshow-container">
-      <div class="slide active">
+      <div class="slide active" id="slide-1">
         <img src="./settings-screen.jpg" alt="Settings">
         <div class="caption">Settings Screen: Customize keyboard, mod counts, and CSV import.</div>
       </div>
-      <div class="slide">
+      <div class="slide" id="slide-2">
         <img src="./extended-settings.jpg" alt="Extended">
         <div class="caption">Extended Settings: Export, add, and edit items with ease.</div>
       </div>
-      <div class="slide">
+      <div class="slide" id="slide-3">
         <img src="./home-screen.jpg" alt="Home">
         <div class="caption">Home Screen: Clean and intuitive transaction starting point.</div>
       </div>
-      <div class="slide">
+      <div class="slide" id="slide-4">
         <img src="./dynamic-keyboard.jpg" alt="Keyboard">
         <div class="caption">Dynamic Keyboard: Adaptive keys for faster inputs.</div>
       </div>
-      <div class="slide">
+      <div class="slide" id="slide-5">
         <img src="./search-screen.jpg" alt="Search">
         <div class="caption">Search Screen: Bilingual names and quantity options.</div>
       </div>
-      <div class="slide">
+      <div class="slide" id="slide-6">
         <img src="./shopping-cart.jpg" alt="Cart">
         <div class="caption">Shopping Cart: Real-time totals with item management.</div>
       </div>
-      <div class="slide">
+      <div class="slide" id="slide-7">
         <img src="./payment-input.jpg" alt="Payment">
         <div class="caption">Payment Input: Enter payment and calculate balance fast.</div>
       </div>
-      <div class="slide">
+      <div class="slide" id="slide-8">
         <img src="./balance-screen.jpg" alt="Balance">
         <div class="caption">Balance Screen: Instantly shows customer change due.</div>
       </div>
-      <a class="prev" onclick="changeSlide(-1)" aria-label="Previous slide">❮</a>
-      <a class="next" onclick="changeSlide(1)" aria-label="Next slide">❯</a>
+
+      <!-- Updated arrows with noscript fallback -->
+      <a class="prev" href="#slide-8" onclick="changeSlide(-1)" aria-label="Previous slide">❮</a>
+      <a class="next" href="#slide-2" onclick="changeSlide(1)" aria-label="Next slide">❯</a>
+
+      <noscript>
+        <style>
+          .prev, .next {
+            display: flex !important;
+          }
+          .slide {
+            position: relative;
+            opacity: 1;
+            transform: none;
+            display: none;
+          }
+          .slide:target {
+            display: block;
+          }
+          .slide:first-child {
+            display: block;
+          }
+        </style>
+      </noscript>
     </div>
     <div class="dot-container"></div>
   </section>
@@ -615,17 +679,17 @@
   <section class="contact" id="contact">
     <h2>Get In Touch</h2>
     <p>We are ready to customize SwiftStock to your specific requirements. Reach out for a demo or a custom build.</p>
-    <form>
+    <form id="contact-form">
       <div class="form-group">
-        <input type="text" class="form-input" placeholder=" " />
+        <input type="text" name="user_name" class="form-input" placeholder=" " required />
         <label class="form-label">Your Name</label>
       </div>
       <div class="form-group">
-        <input type="email" class="form-input" placeholder=" " />
+        <input type="email" name="user_email" class="form-input" placeholder=" " required />
         <label class="form-label">Your Email</label>
       </div>
       <div class="form-group">
-        <textarea class="form-input" rows="4" placeholder=" "></textarea>
+        <textarea name="message" class="form-input" rows="4" placeholder=" " required></textarea>
         <label class="form-label">How can we help you?</label>
       </div>
       <button type="submit">Send Message</button>
@@ -634,35 +698,120 @@
 
   <footer>
     <p>&copy; 2025 Nivora (Pvt) Ltd. All rights reserved.</p>
-    <p>Follow our journey: <a href="#">Twitter</a> • <a href="#">LinkedIn</a> • <a href="#">Instagram</a></p>
   </footer>
 
   <!-- Decorative Waves -->
   <div class="decorative-wave" style="top: 200px; z-index: -1;"></div>
   <div class="decorative-wave" style="top: 1200px; transform: rotate(180deg); opacity: 0.8;"></div>
 
+  <!-- Notification HTML (for form feedback) -->
+  <div class="notification success">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M20 6L9 17l-5-5"/>
+    </svg>
+    <span>Message sent successfully!</span>
+  </div>
+  <div class="notification error">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 2v2m0 16v2M4 12H2m4.3-6.3l-1.4-1.4m12.8 1.4l1.4-1.4M18 12h2m-4.3 6.3l1.4 1.4M12 8l-4 4 2 2 6-6"/>
+    </svg>
+    <span>Failed to send message. Please try again.</span>
+  </div>
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    (function() {
+      emailjs.init("oL0Js_DR3ykeerz0q");
+    })();
+
+    document.getElementById('contact-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const successNotification = document.querySelector('.notification.success');
+      const errorNotification = document.querySelector('.notification.error');
+
+      emailjs.sendForm('service_hiaol35', 'template_pznizeu', this)
+        .then(() => {
+          successNotification.classList.add('show');
+          this.reset();
+          setTimeout(() => successNotification.classList.remove('show'), 3000);
+        }, (error) => {
+          errorNotification.querySelector('span').textContent = `Failed to send: ${error.text}`;
+          errorNotification.classList.add('show');
+          setTimeout(() => errorNotification.classList.remove('show'), 5000);
+        });
+    });
+  </script>
+
+  <!-- Slideshow Script with Auto-Pause on Interaction -->
   <script>
     let slideIndex = 0;
     let autoSlideInterval;
+    let inactivityTimer;
     const slideDuration = 3000;
+    const inactivityTimeout = 10000; // 10 seconds
 
     document.addEventListener('DOMContentLoaded', () => {
       createDots();
       showSlide(slideIndex);
       startAutoSlide();
       addTouchSupport();
+      setupInactivityWatcher();
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
+          }
+        });
+      });
     });
 
-    function createDots() {
-      const dotContainer = document.querySelector('.dot-container');
-      const slides = document.querySelectorAll('.slide');
-      slides.forEach((_, index) => {
-        const dot = document.createElement('button');
-        dot.className = 'dot';
-        dot.setAttribute('aria-label', `View slide ${index + 1}`);
-        dot.addEventListener('click', () => goToSlide(index));
-        dotContainer.appendChild(dot);
-      });
+    // ================== INACTIVITY WATCHER ==================
+    function setupInactivityWatcher() {
+      // Reset timer on any user interaction
+      document.addEventListener('click', resetInactivityTimer);
+      document.addEventListener('touchstart', resetInactivityTimer);
+      document.addEventListener('keypress', resetInactivityTimer);
+
+      // Initial start
+      resetInactivityTimer();
+    }
+
+    function resetInactivityTimer() {
+      clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(startAutoSlide, inactivityTimeout);
+    }
+
+    // ================== AUTO-SLIDE CONTROL ==================
+    function startAutoSlide() {
+      if (!autoSlideInterval) {
+        autoSlideInterval = setInterval(() => changeSlide(1), slideDuration);
+      }
+    }
+
+    function stopAutoSlide() {
+      clearInterval(autoSlideInterval);
+      autoSlideInterval = null;
+    }
+
+    // ================== SLIDE NAVIGATION ==================
+    function changeSlide(offset) {
+      stopAutoSlide();
+      showSlide(slideIndex + offset);
+      resetInactivityTimer();
+    }
+
+    function goToSlide(index) {
+      stopAutoSlide();
+      showSlide(index);
+      resetInactivityTimer();
     }
 
     function showSlide(index) {
@@ -673,9 +822,8 @@
       if (index >= slides.length) index = 0;
       if (index < 0) index = slides.length - 1;
 
-      // Fade out current slide (if any)
+      // Fade out old slide, fade in new
       slides[slideIndex]?.classList.add('transition-out');
-
       setTimeout(() => {
         slides.forEach((slide, i) => {
           slide.classList.remove('active', 'transition-out');
@@ -688,25 +836,24 @@
       }, 300);
     }
 
-    function changeSlide(offset) {
-      showSlide(slideIndex + offset);
-      resetAutoSlide();
+    // ================== DOT CREATION ==================
+    function createDots() {
+      const dotContainer = document.querySelector('.dot-container');
+      const slides = document.querySelectorAll('.slide');
+      slides.forEach((_, index) => {
+        const dot = document.createElement('button');
+        dot.className = 'dot';
+        dot.setAttribute('aria-label', `View slide ${index + 1}`);
+        dot.addEventListener('click', () => {
+          stopAutoSlide();
+          goToSlide(index);
+          resetInactivityTimer();
+        });
+        dotContainer.appendChild(dot);
+      });
     }
 
-    function goToSlide(index) {
-      showSlide(index);
-      resetAutoSlide();
-    }
-
-    function startAutoSlide() {
-      autoSlideInterval = setInterval(() => changeSlide(1), slideDuration);
-    }
-
-    function resetAutoSlide() {
-      clearInterval(autoSlideInterval);
-      startAutoSlide();
-    }
-
+    // ================== TOUCH SUPPORT ==================
     function addTouchSupport() {
       const slider = document.querySelector('.slideshow-container');
       let touchStartX = 0;
@@ -714,6 +861,8 @@
 
       slider.addEventListener('touchstart', (e) => {
         touchStartX = e.touches[0].clientX;
+        stopAutoSlide();
+        resetInactivityTimer();
       }, { passive: true });
 
       slider.addEventListener('touchend', (e) => {
@@ -722,22 +871,9 @@
         if (Math.abs(deltaX) > swipeThreshold) {
           changeSlide(deltaX > 0 ? 1 : -1);
         }
+        resetInactivityTimer();
       }, { passive: true });
     }
-
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start',
-          });
-        }
-      });
-    });
   </script>
 </body>
 </html>
