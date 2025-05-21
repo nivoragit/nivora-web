@@ -170,6 +170,81 @@
       color: var(--secondary);
       transition: color 0.3s ease;
     }
+    /* ADDED FLOATING BUTTONS SECTION */
+    .floating-buttons {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 1001; /* Above header */
+      transition: all 0.3s ease;
+    }
+
+    .email-button, .back-to-top {
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .email-button {
+      background: linear-gradient(135deg, var(--accent) 0%, #6A1B9A 100%);
+      color: white;
+      padding: 14px 24px;
+      border-radius: 30px;
+      gap: 10px;
+    }
+
+    .email-button svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    .back-to-top {
+      background: linear-gradient(135deg, var(--secondary) 0%, #FF9100 100%);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 1.4rem;
+      color: white;
+    }
+
+    .email-button:hover, .back-to-top:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 7px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Mobile optimization */
+    @media (max-width: 768px) {
+      .floating-buttons {
+        bottom: 20px;
+        right: 15px;
+        gap: 10px;
+      }
+
+      .email-button span {
+        display: none;
+      }
+      
+      .email-button {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        padding: 0;
+      }
+
+      .email-button, .back-to-top {
+        width: 50px !important;
+        height: 50px !important;
+      }
+    }
+
 
     /* -- Updated Slideshow Section with UI/Color Theory Enhancements -- */
     .slideshow {
@@ -736,6 +811,50 @@
     <span>Failed to send message. Please try again.</span>
   </div>
 
+   <!-- Floating Action Buttons -->
+  <div class="floating-buttons">
+    <button class="email-button" aria-label="Contact Us" onclick="scrollToContact()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/>
+      </svg>
+      <span>Email Us</span>
+    </button>
+    <button class="back-to-top" aria-label="Back to Top" onclick="scrollToTop()">↑</button>
+  </div>
+
+  <script>
+    // ADDED SCROLL FUNCTIONS
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    function scrollToContact() {
+      document.getElementById('contact').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+
+    // SHOW/HIDE BACK TO TOP BASED ON SCROLL
+    window.addEventListener('scroll', () => {
+      const backButton = document.querySelector('.back-to-top');
+      if (window.scrollY > 500) {
+        backButton.style.opacity = '1';
+        backButton.style.visibility = 'visible';
+      } else {
+        backButton.style.opacity = '0';
+        backButton.style.visibility = 'hidden';
+      }
+    });
+
+    // Initial hide on load
+    document.querySelector('.back-to-top').style.opacity = '0';
+    document.querySelector('.back-to-top').style.visibility = 'hidden';
+  </script>
+  
   <!-- EmailJS -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>
