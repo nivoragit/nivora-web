@@ -4,85 +4,78 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Swiftstock Live Demo | Nivora</title>
+
+  <!-- Optional: help the browser warm up the connection -->
+  <link rel="preconnect" href="https://nivora-sstock.netlify.app">
+
   <style>
+    /* ---- 1. Global reset ----------------------------- */
     html, body {
       margin: 0;
-      padding: 0;
-      width: 100%;
       height: 100%;
-      background: #F9F9FF;
-      font-family: 'Segoe UI', system-ui, sans-serif;
       overflow: hidden;
+      background: #F9F9FF;
+      font-family: "Segoe UI", system-ui, sans-serif;
     }
 
-    .container {
-      position: relative;
+    /* ---- 2. Full-window iframe ----------------------- */
+    iframe {
+      position: fixed;           /* covers the whole viewport */
+      inset: 0;                  /* shorthand for top/left/bottom/right:0 */
       width: 100%;
       height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      border: 0;
+      opacity: 0;                /* fade in when ready */
+      transition: opacity .4s ease;
     }
 
-    .loading-container {
-      /* you can leave this empty or add a spinner/image here if desired */
-      transition: opacity 0.5s ease-in-out;
+    /* ---- 3. Loader overlay --------------------------- */
+    .loader {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #F9F9FF;       /* matches body, feels seamless */
+      transition: opacity .4s ease;
       z-index: 10;
     }
-
-    iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      border: none;
+    .loader.fade-out {
       opacity: 0;
-      transition: opacity 0.5s ease-in-out;
-    }
-
-    .fade-out {
-      opacity: 0 !important;
-      transition: opacity 0.5s ease-in-out;
+      pointer-events: none;
     }
   </style>
 </head>
-<body>
-  <div class="container">
-    <div class="loading-container" id="loadingContainer">
-      <!-- Loader container is now empty -->
-    </div>
 
-    <iframe id="contentFrame" src="https://nivora-sstock.netlify.app/" loading="eager"></iframe>
-  </div>
+<body>
+  <!-- Loader (add a spinner or message if you like) -->
+  <div id="loader" class="loader"></div>
+
+  <!-- App -->
+  <iframe id="app" src="https://nivora-sstock.netlify.app/" loading="eager"></iframe>
 
   <script>
-    const iframe = document.getElementById('contentFrame');
-    const loadingContainer = document.getElementById('loadingContainer');
+    const iframe  = document.getElementById('app');
+    const loader  = document.getElementById('loader');
 
-    // Resize iframe to fill the viewport
-    function resizeIframe() {
-      iframe.style.height = `${window.innerHeight}px`;
-    }
-    window.addEventListener('resize', resizeIframe);
-    resizeIframe();
-
-    // When the iframe finishes loading, hide the loader and show the app
+    // Success: fade loader out, fade iframe in
     iframe.addEventListener('load', () => {
-      loadingContainer.classList.add('fade-out');
-      setTimeout(() => {
-        loadingContainer.remove();
-        iframe.style.opacity = '1';
-      }, 500);
+      loader.classList.add('fade-out');
+      iframe.style.opacity = 1;
+      setTimeout(() => loader.remove(), 400);    // remove from DOM after fade
     });
 
-    // Error fallback
+    // Failure: show a friendly retry prompt
     iframe.addEventListener('error', () => {
-      loadingContainer.innerHTML = `
-        <div style="text-align:center; max-width:400px; margin:auto;">
-          <h2 style="color:#c00; margin:0 0 1rem;">Oops! Something went wrong</h2>
-          <p style="margin:0 0 1.5rem;">We're having trouble loading Swiftstock. Please check your connection and try again.</p>
+      loader.innerHTML = `
+        <div style="text-align:center;max-width:400px;">
+          <h2 style="margin:0 0 1rem;color:#c00;">Oops! Something went wrong</h2>
+          <p style="margin:0 0 1.5rem;">
+            We’re having trouble loading Swiftstock.<br>
+            Please check your connection and try again.
+          </p>
           <button
-            style="padding:.6rem 1.2rem; border:none; border-radius:4px; background:#2A5C8B; color:#fff; cursor:pointer;"
+            style="padding:.6rem 1.2rem;border:0;border-radius:4px;background:#2A5C8B;color:#fff;cursor:pointer;"
             onclick="location.reload()">
             Retry
           </button>
