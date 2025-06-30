@@ -58,6 +58,15 @@
       font-weight: 500;
     }
 
+    /* Added style for the wait note */
+    .loading-message small {
+      color: #666;
+      font-size: 0.9rem;
+      font-weight: 400;
+      display: block;
+      margin-top: 0.5rem;
+    }
+
     .loading-subtext {
       color: #666;
       font-size: 0.9rem;
@@ -86,7 +95,8 @@
   <div class="container">
     <div class="loading-container" id="loadingContainer">
       <div class="loading-message" id="loadingMessage">
-        Setting up your Swiftstock Live Demo...
+        Setting up your Swiftstock Live Demo...<br>
+        <small>Please wait—this may take up to 1 minute depending on your network speed.</small>
       </div>
       <div class="progress-container">
         <div class="progress-bar" id="progressBar"></div>
@@ -128,7 +138,7 @@
     let messageIndex = 0;
     const messageInterval = setInterval(() => {
       if (messageIndex < messages.length) {
-        document.getElementById('loadingMessage').textContent = messages[messageIndex];
+        document.getElementById('loadingMessage').innerHTML = `${messages[messageIndex]}`;
         messageIndex++;
       }
     }, 2500);
