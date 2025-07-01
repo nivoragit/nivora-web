@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swiftstock Live Demo | Nivora</title>
+
+  <!-- Optional: help the browser warm up the connection -->
+  <link rel="preconnect" href="https://swiftstock-e4684.web.app">
+
+  <style>
+    /* ---- 1. Global reset ----------------------------- */
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+      background: #F9F9FF;
+      font-family: "Segoe UI", system-ui, sans-serif;
+    }
+
+    /* ---- 2. Full-window iframe ----------------------- */
+    iframe {
+      position: fixed;           /* covers the whole viewport */
+      inset: 0;                  /* shorthand for top/left/bottom/right:0 */
+      width: 100%;
+      height: 100%;
+      border: 0;
+      opacity: 0;                /* fade in when ready */
+      transition: opacity .4s ease;
+    }
+
+    /* ---- 3. Loader overlay --------------------------- */
+    .loader {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #F9F9FF;       /* matches body, feels seamless */
+      transition: opacity .4s ease;
+      z-index: 10;
+    }
+    .loader.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Loader (add a spinner or message if you like) -->
+  <div id="loader" class="loader"></div>
+
+  <!-- App -->
+  <iframe id="app" src="https://swiftstock-e4684.web.app" loading="eager"></iframe>
+
+  <script>
+    const iframe  = document.getElementById('app');
+    const loader  = document.getElementById('loader');
+
+    // Success: fade loader out, fade iframe in
+    iframe.addEventListener('load', () => {
+      loader.classList.add('fade-out');
+      iframe.style.opacity = 1;
+      setTimeout(() => loader.remove(), 400);    // remove from DOM after fade
+    });
+
+    // Failure: show a friendly retry prompt
+    iframe.addEventListener('error', () => {
+      loader.innerHTML = `
+        <div style="text-align:center;max-width:400px;">
+          <h2 style="margin:0 0 1rem;color:#c00;">Oops! Something went wrong</h2>
+          <p style="margin:0 0 1.5rem;">
+            We’re having trouble loading Swiftstock.<br>
+            Please check your connection and try again.
+          </p>
+          <button
+            style="padding:.6rem 1.2rem;border:0;border-radius:4px;background:#2A5C8B;color:#fff;cursor:pointer;"
+            onclick="location.reload()">
+            Retry
+          </button>
+        </div>`;
+    });
+  </script>
+</body>
+</html>
