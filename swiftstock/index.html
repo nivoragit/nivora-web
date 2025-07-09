@@ -130,6 +130,15 @@
     .tile-button:hover::before {
       transform: rotate(45deg) translateY(-20px);
     }
+    @keyframes pulse {
+      0%   { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,107,53,0.6); }
+      50%  { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(255,107,53,0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,107,53,0); }
+    }
+    .cta-highlight {
+      animation: pulse 2s infinite;
+    }
+
     .features {
       padding: 60px 20px;
       text-align: center;
@@ -682,7 +691,7 @@
   <section class="hero" id="home">
     <h1>SwiftStock: Fast, Familiar, and Mobile</h1>
     <p>Record transactions on the fly with the speed of a calculator and the precision of a dedicated sales app.</p>
-    <a href="https://nivora.org.uk/swiftstock/demo/" class="tile-button">Live Demo</a>
+    <a href="https://nivora.org.uk/swiftstock/demo/" class="tile-button cta-highlight">Live Demo</a>
   </section>
 
   <section class="features" id="features">
