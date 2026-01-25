@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authord | The DocOps Operating System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        },
+                        dark: {
+                            bg: '#020617',      /* Deepest Slate */
+                            section: '#0B1120', /* Standard Bg */
+                            card: '#151e2e',    /* Card Base */
+                            border: '#1e293b',  /* Border */
+                        },
+                        state: {
+                            code: '#fbbf24',   /* Amber (Source) */
+                            local: '#38bdf8',  /* Sky (Draft) */
+                            remote: '#a78bfa', /* Violet (Published) */
+                            drift: '#f43f5e',  /* Rose (Danger) */
+                            safe: '#10b981',   /* Emerald (Success) */
+                        }
+                    },
+                    backgroundImage: {
+                        'hero-glow': 'radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.15) 0%, rgba(2, 6, 23, 0) 60%)',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #020617; color: #e2e8f0; }
+        .gradient-text {
+            background: linear-gradient(to right, #fbbf24, #38bdf8, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .code-font { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Custom Scrollbar */
+        .custom-scroll::-webkit-scrollbar { width: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #0f172a; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+    </style>
+</head>
+<body class="antialiased font-sans relative overflow-x-hidden selection:bg-brand-500/30 selection:text-brand-200">
+
+    <div class="fixed inset-0 bg-hero-glow z-0 pointer-events-none"></div>
+
+    <nav class="fixed w-full z-50 bg-dark-bg/80 backdrop-blur-md border-b border-dark-border">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-brand-500/20">A</div>
+                <span class="text-lg font-bold tracking-tight text-white">Authord</span>
+            </div>
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
+                <a href="#comparison" class="hover:text-white transition">The Problem</a>
+                <a href="#workflow" class="hover:text-white transition">How it Works</a>
+                <a href="#authoring" class="hover:text-white transition">Authoring</a>
+                <a href="#diffing" class="hover:text-white transition">Diff Engine</a>
+                <a href="#governance" class="hover:text-white transition">Governance</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="https://github.com/bmad-code-org" target="_blank" class="text-slate-400 hover:text-white transition">
+                    <i class="fab fa-github text-xl"></i>
+                </a>
+                <a href="#" class="bg-white text-slate-900 hover:bg-slate-100 px-5 py-2 rounded-md text-sm font-semibold transition shadow-lg shadow-white/5">
+                    Get Extension
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative z-10 pt-40 pb-20 px-6 text-center max-w-6xl mx-auto">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/50 border border-slate-700 text-xs font-medium text-brand-400 mb-8 backdrop-blur-sm">
+            <span class="w-2 h-2 rounded-full bg-brand-400 animate-pulse"></span>
+            The First "Tri-State" DocOps Platform
+        </div>
+        
+        <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-8 text-white leading-[1.1]">
+            Code, Docs, and Confluence.<br>
+            <span class="gradient-text">Finally Synchronized.</span>
+        </h1>
+        
+        <p class="text-xl text-slate-400 mb-10 max-w-3xl mx-auto leading-relaxed font-light">
+            Authord is the operating system for Technical Writers. We bind your <strong>Code</strong>, <strong>Local Drafts</strong>, and <strong>Confluence Pages</strong> into a single, governed registry. 
+            Stop chasing developers. Manage Drift automatically.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
+            <a href="#authoring" class="w-full sm:w-auto bg-brand-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-brand-500 transition shadow-lg shadow-brand-500/25 flex items-center justify-center gap-2">
+                Start Harmonizing
+            </a>
+            <a href="#comparison" class="w-full sm:w-auto px-8 py-4 rounded-lg font-semibold border border-slate-700 hover:bg-slate-800 transition text-slate-300">
+                The DocOps Difference
+            </a>
+        </div>
+
+        <div class="mt-24 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto text-left">
+            <div class="p-6 rounded-xl bg-dark-card border border-dark-border relative overflow-hidden group hover:border-state-code/30 transition">
+                <div class="absolute top-0 right-0 p-4 opacity-10 text-6xl group-hover:scale-110 transition duration-500 text-state-code"><i class="fas fa-code"></i></div>
+                <div class="text-brand-400 text-xs font-bold uppercase tracking-wider mb-2">Source of Truth</div>
+                <h3 class="text-white text-lg font-bold mb-2">1. The Code</h3>
+                <p class="text-slate-400 text-sm">Authord watches the AST. If a signature changes, we know.</p>
+            </div>
+            <div class="p-6 rounded-xl bg-dark-card border-2 border-brand-500/20 relative overflow-hidden shadow-2xl shadow-brand-900/20">
+                <div class="absolute top-0 right-0 p-4 opacity-10 text-6xl text-brand-500"><i class="fas fa-file-alt"></i></div>
+                <div class="text-brand-400 text-xs font-bold uppercase tracking-wider mb-2">The Workbench</div>
+                <h3 class="text-white text-lg font-bold mb-2">2. Local Registry</h3>
+                <p class="text-slate-400 text-sm">A Git-tracked registry mapping symbols to docs. Versioned and diffable.</p>
+            </div>
+            <div class="p-6 rounded-xl bg-dark-card border border-dark-border relative overflow-hidden group hover:border-state-remote/30 transition">
+                <div class="absolute top-0 right-0 p-4 opacity-10 text-6xl group-hover:scale-110 transition duration-500 text-state-remote"><i class="fab fa-confluence"></i></div>
+                <div class="text-brand-400 text-xs font-bold uppercase tracking-wider mb-2">Published Record</div>
+                <h3 class="text-white text-lg font-bold mb-2">3. Confluence</h3>
+                <p class="text-slate-400 text-sm">We fetch Snapshots before you publish. No accidental overwrites.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="comparison" class="relative z-10 py-24 bg-dark-section border-y border-dark-border">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-white mb-4">Why the old way is broken</h2>
+                <p class="text-slate-400">The gap between code and Confluence is where trust dies.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="p-8 rounded-2xl bg-state-drift/5 border border-state-drift/20 relative">
+                    <div class="absolute top-4 right-4 text-state-drift/20 text-4xl"><i class="fas fa-times-circle"></i></div>
+                    <h3 class="text-xl font-bold text-state-drift mb-6">The Status Quo</h3>
+                    <ul class="space-y-4 text-slate-400 text-sm">
+                        <li class="flex gap-3"><i class="fas fa-times mt-1 text-state-drift"></i> Devs change API; don't tell you.</li>
+                        <li class="flex gap-3"><i class="fas fa-times mt-1 text-state-drift"></i> Docs rot silently for weeks.</li>
+                        <li class="flex gap-3"><i class="fas fa-times mt-1 text-state-drift"></i> Copy/Paste to Confluence overwrites edits.</li>
+                    </ul>
+                    <div class="mt-8 p-3 bg-dark-bg/50 rounded border border-state-drift/30 font-mono text-xs text-slate-500">
+                        <span class="text-state-drift font-bold">⚠ DRIFT DETECTED</span><br>
+                        Last Sync: 14 days ago<br>
+                        Status: <span class="text-white">API Mismatch (Critical)</span>
+                    </div>
+                </div>
+
+                <div class="p-8 rounded-2xl bg-brand-900/10 border border-brand-500/30 relative shadow-2xl shadow-brand-900/10">
+                    <div class="absolute top-4 right-4 text-brand-500/20 text-4xl"><i class="fas fa-check-circle"></i></div>
+                    <h3 class="text-xl font-bold text-brand-400 mb-6">The Authord Way</h3>
+                    <ul class="space-y-4 text-white text-sm">
+                        <li class="flex gap-3"><i class="fas fa-check mt-1 text-brand-500"></i> <strong>Sentinel</strong> flags drift instantly.</li>
+                        <li class="flex gap-3"><i class="fas fa-check mt-1 text-brand-500"></i> <strong>Scribe</strong> drafts the update via AI.</li>
+                        <li class="flex gap-3"><i class="fas fa-check mt-1 text-brand-500"></i> <strong>Publisher</strong> checks snapshots first.</li>
+                    </ul>
+                    <div class="mt-8 p-3 bg-dark-bg/50 rounded border border-state-safe/30 font-mono text-xs text-slate-500">
+                        <span class="text-state-safe font-bold">✓ SYSTEM SYNCED</span><br>
+                        Last Sync: Just now<br>
+                        Status: <span class="text-white">v14.2 Published</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="workflow" class="relative z-10 py-24 bg-dark-bg overflow-hidden border-t border-dark-border">
+        <div class="absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-transparent via-slate-700 to-transparent hidden lg:block -translate-y-1/2 z-0"></div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-20">
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">Automated Integrity <br> <span class="gradient-text">in 3 Steps</span></h2>
+                <p class="text-slate-400">See how Authord catches drift before it breaks your documentation.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="relative group">
+                    <div class="absolute -inset-1 bg-gradient-to-b from-state-code/20 to-transparent rounded-2xl blur opacity-20 group-hover:opacity-40 transition"></div>
+                    <div class="bg-dark-card border border-slate-700 rounded-2xl p-2 h-full flex flex-col">
+                        <div class="p-6 text-center border-b border-slate-700/50">
+                            <div class="w-12 h-12 mx-auto bg-state-code/10 text-state-code rounded-xl flex items-center justify-center text-xl mb-4 border border-state-code/20">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">1. Detect Drift</h3>
+                            <p class="text-sm text-slate-400 mt-2">The Sentinel watches your AST.</p>
+                        </div>
+                        <div class="bg-[#0f172a] p-4 rounded-xl mt-4 font-mono text-xs shadow-inner flex-grow border border-slate-800 m-2">
+                            <div class="text-gray-400 leading-relaxed overflow-x-auto custom-scroll">
+                                <span class="text-purple-400">class</span> <span class="text-yellow-200">PaymentService</span> {<br>
+                                &nbsp;&nbsp;<span class="text-purple-400">public</span> <span class="text-blue-400">charge</span>(<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;amount: <span class="text-emerald-400">number</span>,<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="border-b-2 border-state-code text-white cursor-help">currency: string</span><br>
+                                &nbsp;&nbsp;) { ... }<br>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative group mt-8 lg:mt-0 lg:-translate-y-8">
+                    <div class="absolute -inset-1 bg-gradient-to-b from-state-local/20 to-transparent rounded-2xl blur opacity-20 group-hover:opacity-40 transition"></div>
+                    <div class="bg-dark-card border border-state-local/30 rounded-2xl p-2 h-full flex flex-col shadow-[0_0_30px_rgba(56,189,248,0.1)]">
+                        <div class="p-6 text-center border-b border-slate-700/50">
+                            <div class="w-12 h-12 mx-auto bg-state-local/10 text-state-local rounded-xl flex items-center justify-center text-xl mb-4 border border-state-local/20">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">2. Auto-Harmonize</h3>
+                            <p class="text-sm text-slate-400 mt-2">AI drafts the update for you.</p>
+                        </div>
+                        <div class="bg-[#0f172a] p-4 rounded-xl mt-4 font-mono text-xs shadow-inner flex-grow border border-slate-800 flex flex-col gap-3 m-2">
+                            <div class="flex items-start gap-3">
+                                <div class="w-6 h-6 rounded bg-state-local flex-shrink-0 flex items-center justify-center text-[10px] text-dark-bg font-bold">A</div>
+                                <div class="bg-slate-800 p-2 rounded-lg border border-slate-700 text-slate-300">
+                                    Detected new param <code class="text-state-code">currency</code>. Drafting update...
+                                </div>
+                            </div>
+                            <div class="bg-black/30 p-3 rounded border-l-2 border-state-safe text-state-safe/90 font-mono text-[10px]">
+                                + | currency | ISO 4217 Code |
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative group">
+                    <div class="absolute -inset-1 bg-gradient-to-b from-state-remote/20 to-transparent rounded-2xl blur opacity-20 group-hover:opacity-40 transition"></div>
+                    <div class="bg-dark-card border border-slate-700 rounded-2xl p-2 h-full flex flex-col">
+                        <div class="p-6 text-center border-b border-slate-700/50">
+                            <div class="w-12 h-12 mx-auto bg-state-remote/10 text-state-remote rounded-xl flex items-center justify-center text-xl mb-4 border border-state-remote/20">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">3. Safe Publish</h3>
+                            <p class="text-sm text-slate-400 mt-2">Syncs to Confluence v2.0.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl mt-4 font-sans text-xs shadow-inner flex-grow relative overflow-hidden m-2">
+                            <div class="absolute top-0 right-0 bg-state-safe text-white px-2 py-0.5 text-[10px] font-bold rounded-bl">PUBLISHED</div>
+                            <div class="flex items-center gap-2 mb-3 border-b border-slate-100 pb-2">
+                                <i class="fab fa-confluence text-blue-600 text-lg"></i>
+                                <span class="text-slate-700 font-bold">Payment API</span>
+                                <span class="text-slate-400 text-[10px]">v14</span>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="h-2 w-3/4 bg-slate-200 rounded"></div>
+                                <div class="p-1 flex justify-between bg-green-50 border-l-2 border-green-500">
+                                    <span class="text-slate-800 font-semibold">currency</span>
+                                    <span class="text-slate-500">ISO Code</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-dark-section border-t border-dark-border">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-3xl font-bold text-white mb-16 text-center">Your New Workflow</h2>
+            
+            <div class="space-y-8">
+                <div class="flex flex-col md:flex-row gap-8 items-center bg-dark-card p-8 rounded-2xl border border-dark-border hover:border-brand-500/30 transition duration-300">
+                    <div class="w-full md:w-1/4 flex justify-center">
+                        <div class="w-16 h-16 rounded-full bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 flex items-center justify-center text-2xl font-bold">1</div>
+                    </div>
+                    <div class="w-full md:w-3/4">
+                        <h3 class="text-xl font-bold text-white mb-2">Developer changes code</h3>
+                        <p class="text-slate-400 text-sm mb-4">A developer adds a <code>currency</code> parameter to the <code>PaymentService</code>. They forget to update the docs.</p>
+                        <div class="bg-dark-bg p-3 rounded border-l-4 border-yellow-500 text-xs font-mono text-slate-300">
+                            <span class="text-yellow-500">[Sentinel]</span> Drift Detected: Signature mismatch in topic 'payment-api'.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-8 items-center bg-dark-card p-8 rounded-2xl border border-dark-border hover:border-brand-500/30 transition duration-300">
+                    <div class="w-full md:w-1/4 flex justify-center">
+                        <div class="w-16 h-16 rounded-full bg-brand-500/10 text-brand-500 border border-brand-500/20 flex items-center justify-center text-2xl font-bold">2</div>
+                    </div>
+                    <div class="w-full md:w-3/4">
+                        <h3 class="text-xl font-bold text-white mb-2">You run "Harmonize Topic"</h3>
+                        <p class="text-slate-400 text-sm mb-4">You click the diagnostic. The Scribe agent analyzes the diff and your governance rules.</p>
+                        <div class="bg-dark-bg p-3 rounded text-xs font-mono text-slate-300 border border-slate-700">
+                            <span class="text-purple-400">@Authord:</span> "I detected a new parameter. Based on `rules.yaml`, I have drafted a table row for `currency`. Review diff?"
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-8 items-center bg-dark-card p-8 rounded-2xl border border-dark-border hover:border-brand-500/30 transition duration-300">
+                    <div class="w-full md:w-1/4 flex justify-center">
+                        <div class="w-16 h-16 rounded-full bg-green-500/10 text-green-500 border border-green-500/20 flex items-center justify-center text-2xl font-bold">3</div>
+                    </div>
+                    <div class="w-full md:w-3/4">
+                        <h3 class="text-xl font-bold text-white mb-2">Review & Publish</h3>
+                        <p class="text-slate-400 text-sm mb-4">You accept the patch into your local Markdown. The <strong>Publisher</strong> workflow runs in CI/CD, checking the remote snapshot first.</p>
+                        <div class="bg-dark-bg p-3 rounded text-xs font-mono text-green-400 border border-green-900/50">
+                            ✓ Sync Successful: Confluence Page #123 updated to v14.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="authoring" class="relative z-10 py-24 bg-dark-bg border-y border-dark-border">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                
+                <div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-state-local/10 text-xs font-medium text-state-local mb-6">
+                        <i class="fas fa-pen-nib"></i> Dual-Pane Authoring
+                    </div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Write with <br> <span class="gradient-text">Real-Time Preview</span></h2>
+                    <p class="text-slate-400 text-lg mb-8 leading-relaxed">
+                        Authord isn't a black box. It operates in your familiar VS Code environment with a powerful <strong>Side-by-Side</strong> view. 
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-dark-card flex items-center justify-center border border-dark-border text-white font-bold">1</div>
+                            <div>
+                                <h4 class="text-white font-bold">Write in Markdown</h4>
+                                <p class="text-sm text-slate-500">Full syntax highlighting for tables, code blocks, and alerts. It's just text files on your disk.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-dark-card flex items-center justify-center border border-dark-border text-white font-bold">2</div>
+                            <div>
+                                <h4 class="text-white font-bold">Instant Preview</h4>
+                                <p class="text-sm text-slate-500">See exactly how it will look on Confluence before you push. No more "save and pray."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative group">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-state-local to-purple-600 rounded-xl blur opacity-20 group-hover:opacity-40 transition duration-700"></div>
+                    
+                    <div class="relative bg-dark-card rounded-xl border border-dark-border shadow-2xl overflow-hidden flex flex-col h-[500px]">
+                        <div class="h-9 bg-dark-section border-b border-dark-border flex items-center px-4 justify-between">
+                            <div class="flex items-center gap-4">
+                                <div class="flex gap-1.5">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-slate-600"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-slate-600"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-slate-600"></div>
+                                </div>
+                                <span class="text-xs text-slate-400 font-mono flex items-center gap-2">
+                                    <i class="fab fa-markdown text-state-local"></i> payment.md
+                                </span>
+                            </div>
+                            <div class="flex gap-3 text-slate-500 text-xs">
+                                <i class="fas fa-columns hover:text-white cursor-pointer" title="Split View"></i>
+                                <i class="fas fa-search hover:text-white cursor-pointer"></i>
+                            </div>
+                        </div>
+
+                        <div class="flex-1 grid grid-cols-2 divide-x divide-dark-border">
+                            <div class="bg-[#0f172a] p-5 font-mono text-xs text-slate-300 overflow-y-auto custom-scroll">
+                                <div class="text-slate-500 mb-4">---<br>title: Payment API<br>status: draft<br>---</div>
+                                <div class="text-purple-400 font-bold"># Payment Processing</div>
+                                <br>
+                                <div class="text-slate-300">The <span class="text-yellow-300">`PaymentService`</span> handles all transaction logic.</div>
+                                <br>
+                                <div class="text-purple-400 font-bold">## Public Methods</div>
+                                <br>
+                                <div class="text-blue-400">### charge(amount, currency)</div>
+                                <br>
+                                <div class="text-slate-300">Initiates a charge.</div>
+                                <br>
+                                <div class="text-slate-400 italic">// AI Generated Table</div>
+                                <div class="text-green-400">| Param | Type | Desc |</div>
+                                <div class="text-green-400">| :--- | :--- | :--- |</div>
+                                <div class="text-green-400">| `amount` | number | Value |</div>
+                                <div class="bg-state-local/20 text-state-local -mx-5 px-5 py-1 border-l-2 border-state-local">| `currency` | string | ISO Code |</div>
+                            </div>
+
+                            <div class="bg-white p-6 overflow-y-auto custom-scroll">
+                                <h1 class="text-2xl font-bold text-slate-900 mb-4">Payment Processing</h1>
+                                <p class="text-slate-600 text-sm mb-6">The <code class="bg-slate-100 px-1 py-0.5 rounded text-red-500 text-xs">PaymentService</code> handles all transaction logic.</p>
+                                
+                                <h2 class="text-lg font-bold text-slate-800 mb-3 border-b pb-1">Public Methods</h2>
+                                <h3 class="text-base font-semibold text-slate-800 mb-2">charge(amount, currency)</h3>
+                                <p class="text-slate-600 text-sm mb-4">Initiates a charge.</p>
+
+                                <table class="w-full text-left text-sm border-collapse">
+                                    <thead>
+                                        <tr class="bg-slate-50 border-b border-slate-200">
+                                            <th class="py-2 px-2 text-slate-700 font-bold">Param</th>
+                                            <th class="py-2 px-2 text-slate-700 font-bold">Type</th>
+                                            <th class="py-2 px-2 text-slate-700 font-bold">Desc</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="border-b border-slate-100">
+                                            <td class="py-2 px-2 text-slate-600 font-mono text-xs">amount</td>
+                                            <td class="py-2 px-2 text-slate-600">number</td>
+                                            <td class="py-2 px-2 text-slate-600">Value</td>
+                                        </tr>
+                                        <tr class="bg-sky-50 border-l-2 border-sky-500">
+                                            <td class="py-2 px-2 text-slate-900 font-mono text-xs font-bold">currency</td>
+                                            <td class="py-2 px-2 text-slate-900">string</td>
+                                            <td class="py-2 px-2 text-slate-900">ISO Code</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="diffing" class="relative z-10 py-24 bg-dark-section border-y border-dark-border">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                
+                <div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-state-drift/10 text-xs font-medium text-state-drift mb-6">
+                        <i class="fas fa-exchange-alt"></i> Drift Resolution
+                    </div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">AI Suggests.<br>You <span class="text-state-local">Control.</span></h2>
+                    <p class="text-slate-400 text-lg mb-8 leading-relaxed">
+                        When drift occurs, the Scribe Agent creates a <strong>Working Tree Diff</strong>. You see exactly what changed in the code and what needs to change in the docs.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-dark-bg border border-dark-border flex items-center justify-center text-white font-bold">1</div>
+                            <div>
+                                <h4 class="text-white font-bold">Review the Patch</h4>
+                                <p class="text-sm text-slate-500">The Scribe generates a diff based on your governance rules.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-dark-bg border border-dark-border flex items-center justify-center text-white font-bold">2</div>
+                            <div>
+                                <h4 class="text-white font-bold">Verify Logic</h4>
+                                <p class="text-sm text-slate-500">Ensure the AI captured the nuance of the new parameter.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-dark-bg border border-dark-border flex items-center justify-center text-white font-bold">3</div>
+                            <div>
+                                <h4 class="text-white font-bold">Accept & Sync</h4>
+                                <p class="text-sm text-slate-500">Click to apply. The registry is updated, and the Sentinel turns green.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative group">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-state-drift to-state-safe rounded-xl blur opacity-20 group-hover:opacity-40 transition duration-700"></div>
+                    
+                    <div class="relative bg-dark-bg rounded-xl border border-dark-border shadow-2xl overflow-hidden flex flex-col h-[500px]">
+                        <div class="h-9 bg-dark-card border-b border-dark-border flex items-center px-4 justify-between">
+                            <div class="flex items-center gap-4">
+                                <span class="text-xs text-slate-400 font-mono flex items-center gap-2">
+                                    <i class="fas fa-code-branch text-state-local"></i> Diff: PaymentService (Working Tree)
+                                </span>
+                            </div>
+                            <div class="flex gap-2">
+                                <div class="w-2.5 h-2.5 rounded-full bg-slate-700"></div>
+                                <div class="w-2.5 h-2.5 rounded-full bg-slate-700"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex-1 grid grid-cols-2 divide-x divide-dark-border">
+                            <div class="bg-dark-bg font-mono text-xs text-slate-400 overflow-y-auto custom-scroll relative">
+                                <div class="sticky top-0 bg-dark-bg/90 backdrop-blur p-2 border-b border-dark-border text-red-400 text-[10px] uppercase font-bold tracking-wider">
+                                    <i class="fas fa-minus-circle mr-1"></i> Original
+                                </div>
+                                <div class="p-4 space-y-1">
+                                    <div class="opacity-50">14  charge(amount: number) {</div>
+                                    <div class="bg-red-900/20 text-red-300 -mx-4 px-4 py-0.5 border-l-2 border-red-500/50">15    // Old logic implementation</div>
+                                    <div class="bg-red-900/20 text-red-300 -mx-4 px-4 py-0.5 border-l-2 border-red-500/50">16    return api.post(amount);</div>
+                                    <div class="opacity-50">17  }</div>
+                                </div>
+                            </div>
+
+                            <div class="bg-dark-bg font-mono text-xs text-slate-400 overflow-y-auto custom-scroll relative">
+                                <div class="sticky top-0 bg-dark-bg/90 backdrop-blur p-2 border-b border-dark-border text-green-400 text-[10px] uppercase font-bold tracking-wider">
+                                    <i class="fas fa-plus-circle mr-1"></i> Harmonized
+                                </div>
+                                <div class="p-4 space-y-1">
+                                    <div class="opacity-50">14  charge(amount: number,</div>
+                                    <div class="bg-green-900/20 text-green-300 -mx-4 px-4 py-0.5 border-l-2 border-green-500">15         currency: string) {</div>
+                                    <div class="bg-green-900/20 text-green-300 -mx-4 px-4 py-0.5 border-l-2 border-green-500">16    // Updated per Governance</div>
+                                    <div class="bg-green-900/20 text-green-300 -mx-4 px-4 py-0.5 border-l-2 border-green-500">17    return api.post(amt, cur);</div>
+                                    <div class="opacity-50">18  }</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-dark-card border-t border-dark-border p-3 flex justify-between items-center">
+                            <div class="text-[10px] text-slate-500">
+                                <i class="fas fa-robot text-state-local mr-1"></i> Patch generated by Scribe
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="px-3 py-1.5 rounded hover:bg-slate-700 text-slate-300 text-xs transition">Discard</button>
+                                <button class="px-3 py-1.5 rounded bg-state-local hover:bg-sky-400 text-dark-bg font-bold text-xs transition shadow-lg shadow-sky-500/20">
+                                    Accept Patch
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="py-24 bg-dark-bg border-y border-dark-border">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Complete Documentation Integrity</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">Designed for writers who need engineering-grade tools, not just a spellchecker.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <div class="p-8 bg-dark-card border border-dark-border rounded-xl hover:border-brand-500/30 transition duration-300">
+                    <div class="w-10 h-10 bg-yellow-500/10 text-yellow-500 rounded-lg flex items-center justify-center mb-6"><i class="fas fa-bell"></i></div>
+                    <h3 class="text-xl font-bold text-white mb-3">The Sentinel</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        An always-on monitor that highlights "Doc Drift" in the code editor. It ignores whitespace but flags semantic changes (like new parameters).
+                    </p>
+                </div>
+
+                <div class="p-8 bg-dark-card border border-dark-border rounded-xl hover:border-brand-500/30 transition duration-300">
+                    <div class="w-10 h-10 bg-purple-500/10 text-purple-500 rounded-lg flex items-center justify-center mb-6"><i class="fas fa-wand-magic-sparkles"></i></div>
+                    <h3 class="text-xl font-bold text-white mb-3">Agentic Harmonize</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Don't start from zero. The "Scribe" agent reads the code diff + your style guide and proposes a Markdown patch for you to review.
+                    </p>
+                </div>
+
+                <div class="p-8 bg-dark-card border border-dark-border rounded-xl hover:border-brand-500/30 transition duration-300">
+                    <div class="w-10 h-10 bg-blue-500/10 text-blue-500 rounded-lg flex items-center justify-center mb-6"><i class="fas fa-columns"></i></div>
+                    <h3 class="text-xl font-bold text-white mb-3">Tri-State Diff View</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        The ultimate clarity. See Code Change, Local Draft, and Remote Snapshot side-by-side in a single pane of glass.
+                    </p>
+                </div>
+
+                <div class="p-8 bg-dark-card border border-dark-border rounded-xl hover:border-brand-500/30 transition duration-300">
+                    <div class="w-10 h-10 bg-green-500/10 text-green-500 rounded-lg flex items-center justify-center mb-6"><i class="fas fa-upload"></i></div>
+                    <h3 class="text-xl font-bold text-white mb-3">Conflict-Safe Sync</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        We fetch read-only snapshots first. If the remote version has drifted, we block the publish until you resolve the conflict.
+                    </p>
+                </div>
+
+                <div class="p-8 bg-dark-card border border-dark-border rounded-xl hover:border-brand-500/30 transition duration-300">
+                    <div class="w-10 h-10 bg-red-500/10 text-red-500 rounded-lg flex items-center justify-center mb-6"><i class="fas fa-gavel"></i></div>
+                    <h3 class="text-xl font-bold text-white mb-3">Governance as Code</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Define rules in <code>rules.yaml</code> (e.g., "Public APIs must have examples"). The AI enforces them before drafting text.
+                    </p>
+                </div>
+
+                <div class="p-8 bg-dark-card border border-dark-border rounded-xl hover:border-brand-500/30 transition duration-300">
+                    <div class="w-10 h-10 bg-indigo-500/10 text-indigo-500 rounded-lg flex items-center justify-center mb-6"><i class="fas fa-project-diagram"></i></div>
+                    <h3 class="text-xl font-bold text-white mb-3">Versioned Citations</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Chat with your docs. Authord cites specific Confluence versions (e.g., "v12"), so you know if an answer is based on stale data.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="governance" class="relative z-10 py-24 bg-dark-section border-t border-dark-border">
+        <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-3xl font-bold text-white mb-6">Style Guide as Code</h2>
+                <p class="text-slate-400 mb-6 leading-relaxed">
+                    Stop reviewing PRs for tone. Define your writing standards in a config file. Authord enforces them automatically during the drafting phase.
+                </p>
+                <ul class="space-y-4 text-slate-400 text-sm">
+                    <li class="flex items-center gap-3"><i class="fas fa-check text-brand-500"></i> Enforce required sections (e.g., Error Handling).</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-check text-brand-500"></i> Mandate code examples for public APIs.</li>
+                    <li class="flex items-center gap-3"><i class="fas fa-check text-brand-500"></i> Check for active voice and terminology.</li>
+                </ul>
+            </div>
+            
+            <div class="relative group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-brand-600 to-purple-600 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-500"></div>
+                <div class="relative bg-dark-bg rounded-lg border border-slate-700 p-6 code-font text-sm overflow-x-auto shadow-2xl">
+                    <div class="text-slate-500 mb-4 border-b border-slate-800 pb-2"># _authord/governance/rules.yaml</div>
+                    <div class="text-purple-400">rules:</div>
+                    <div class="pl-4">
+                        <div class="text-slate-300">- <span class="text-blue-400">id:</span> require-examples</div>
+                        <div class="pl-2 text-slate-300"><span class="text-blue-400">match:</span> <span class="text-state-code">"public-api"</span></div>
+                        <div class="pl-2 text-slate-300"><span class="text-blue-400">message:</span> <span class="text-state-code">"Must include a usage example."</span></div>
+                        <div class="pl-2 text-slate-300"><span class="text-blue-400">severity:</span> <span class="text-state-drift">error</span></div>
+                    </div>
+                    <div class="pl-4 mt-4">
+                        <div class="text-slate-300">- <span class="text-blue-400">id:</span> terminology-check</div>
+                        <div class="pl-2 text-slate-300"><span class="text-blue-400">banned:</span> ["master", "slave"]</div>
+                        <div class="pl-2 text-slate-300"><span class="text-blue-400">severity:</span> <span class="text-state-code">warning</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="relative z-10 py-12 px-6 border-t border-dark-border bg-dark-bg">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="flex items-center gap-2">
+                <div class="w-6 h-6 bg-slate-700 rounded flex items-center justify-center text-xs text-white">A</div>
+                <span class="font-semibold text-slate-300">Authord</span>
+                <span class="text-slate-500 text-xs px-2 py-0.5 bg-slate-800 rounded-full">v1.0.0</span>
+            </div>
+            
+            <div class="flex gap-8 text-sm text-slate-500 font-medium">
+                <a href="#" class="hover:text-white transition">Docs</a>
+                <a href="#" class="hover:text-white transition">GitHub</a>
+                <a href="#" class="hover:text-white transition">Marketplace</a>
+            </div>
+
+            <div class="text-slate-600 text-xs">
+                &copy; 2024 Authord. Open Source DocOps.
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
